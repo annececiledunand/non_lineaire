@@ -5,6 +5,7 @@ from sklearn.metrics.pairwise import euclidean_distances as dist
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
+from tqdm import tqdm
 
 # D'après le code de : https://github.com/jcvasquezc/Corr_Dim/blob/master/Corr_Dim.py
 
@@ -34,7 +35,8 @@ def correlation_dim(datas, tau, d):
 	Npairs = ((len(x[1,:]))*((len(x[1,:])-1)))
 	C_eps = np.zeros(n_eps)
 
-	for i in eps_vec:
+	print('Find correlation dimension')
+	for i in tqdm(eps_vec):
 		eps = eps_vec1[i]
 		N = np.where(((ED<eps) & (ED>0)))
 		S = len(N[0])
