@@ -1,9 +1,11 @@
 from math import sqrt, log
+from typing import List
+
 import numpy as np
 from tqdm import tqdm
 
 
-def phase_space_reconstruction(x: np.ndarray, m: int, time_delay: int, nb_recon_vect=-1):
+def phase_space_reconstruction(x: np.ndarray, m: int, time_delay: int, nb_recon_vect: int = -1) -> np.ndarray:
     N = len(x)
     if nb_recon_vect == -1:
         nb_recon_vect = N - (m-1)*time_delay
@@ -15,16 +17,14 @@ def phase_space_reconstruction(x: np.ndarray, m: int, time_delay: int, nb_recon_
     return y
 
 
-def lyapunov_rosenstein(x: np.ndarray, m: int, time_delay: int, mean_period: float, max_iter: int):
+def lyapunov_rosenstein(x: np.ndarray, m: int, time_delay: int, mean_period: float, max_iter: int) -> list:
     N = len(x)
     M = N - (m-1)*time_delay
     near_value, near_index, d = [], [], []
 
-    print('Phase space reconstruction ...')
     y = phase_space_reconstruction(x, m, time_delay)
 
-    print('Find Nearest points ...')
-    for i in tqdm(range(M)):
+    for i in range(M):
         x0 = np.ones((M, 1)) * y[i,:]
         distance = list(np.sqrt(np.sum((y - x0)**2, axis=1)))
 
@@ -35,8 +35,7 @@ def lyapunov_rosenstein(x: np.ndarray, m: int, time_delay: int, mean_period: flo
         near_value.append(min(distance))
         near_index.append(distance.index(near_value[i]))
 
-    print('Calculating coefficients ...')
-    for k in tqdm(range(max_iter)):
+    for k in range(max_iter):
         max_ind = M - k - 1
         evolve = 0
         pnt = 0
@@ -45,7 +44,6 @@ def lyapunov_rosenstein(x: np.ndarray, m: int, time_delay: int, mean_period: flo
             if (j+1 <= max_ind) and (near_index[j] <= max_ind):
                 dist_k = np.sqrt(np.sum((y[j+k, :] - y[near_index[j] + k, :])**2))
                 if dist_k != 0.:
-                    print('in diff')
                     evolve = evolve + log(dist_k)
                     pnt += 1
 

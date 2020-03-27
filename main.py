@@ -1,9 +1,7 @@
 import click
 import os
 
-
-import BE1, BE2, BE3
-
+from BEs import BE1, BE2, BE3
 
 
 @click.group()
@@ -19,7 +17,7 @@ def test(name='test'):
 @cli.command(name='run-be1')
 @click.argument('Exercice')
 def execute_be1(exercice: str):
-    print(f'Launching Exercice {exercice} in BE 3')
+    print(f'Launching Exercice {exercice} in BE 1\n')
     if exercice == '1':
         BE1.Exercice1()
     elif exercice == '2':
@@ -32,7 +30,7 @@ def execute_be1(exercice: str):
 @cli.command(name='run-be2')
 @click.argument('Exercice')
 def execute_be1(exercice: str):
-    print(f'Launching Exercice {exercice} in BE 2')
+    print(f'Launching Exercice {exercice} in BE 2\n')
     if exercice == '1':
         BE2.Exercice1()
     elif exercice == '2':
@@ -46,7 +44,7 @@ def execute_be1(exercice: str):
 @cli.command(name='run-be3')
 @click.argument('Exercice')
 def execute_be1(exercice: str):
-    print(f'Launching Exercice {exercice} in BE 3')
+    print(f'Launching Exercice {exercice} in BE 3\n')
     if exercice == '1':
         BE3.Exercice1()
     else:
