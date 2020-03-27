@@ -31,6 +31,7 @@ def plot_henon(x, y):
     plt.show()
 
 
-# question 1
-x, y = henon(0, 0, 1.4, 0.3, 15000)
-plot_henon(x, y)
+def Exercice1():
+    print('# Question 1')
+    x, y = henon(0, 0, 1.4, 0.3, 15000)
+    plot_henon(x, y)
