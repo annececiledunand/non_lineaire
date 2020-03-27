@@ -18,6 +18,8 @@ def correlation_dim(datas, tau, d):
 	m : embeding dimension of the time-series, computed using the false neighbors method
 	"""
 	x = PhaseSpace(datas, d, tau)
+
+	print('Process data ...')
 	ED2 = dist(x.T)
 	posD = np.triu_indices_from(ED2, k=1)
 	ED = ED2[posD]
@@ -64,7 +66,7 @@ def PhaseSpace(data, d, tau):
     x = np.zeros([d, (n-(d-1)*tau)])
 
     print('Determine Phase Space')
-    for j in tqdm(range(m)):
+    for j in tqdm(range(d)):
         l1 = (tau*(j))
         l2 = (tau*(j) + len(x[1,:]))
         x[j,:] = data[l1:l2]
