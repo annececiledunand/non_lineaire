@@ -36,8 +36,9 @@ def Exercice1():
 
 
     ######## Question 3 ########
-    print('\n# Question 3 (3 minutes de traitement) \n')
-    corr_dim = correlation_dim.correlation_dim(x[50000:], tau=tau, d=d)
+    print('\n# Question 3 \n')
+    corr_dim = 1.9455389141366316
+    # corr_dim = correlation_dim.correlation_dim(x, tau=tau, d=d)
     print(f'Dimension de correlation : {corr_dim}')
     print(f'Dimension attendue : 2.06')
 
@@ -55,17 +56,12 @@ def Exercice2():
     d = correlation_dim.find_d_embedding(x_square, 10)
     print(f'Found embedding dimension d={d}\n')
 
-    lyap_exps = []
-    for N in tqdm(range(1000, 11000, 1000)):
+    for N in range(1000, 11000, 1000):
         x, _, _ = attractors.baier_klein(0, 0, 0, N)
         x_square = [xi*xi for xi in x]
 
         exponent = lyapunov.lyapunov_rosenstein(np.array(x_square), d, time_delay=0, mean_period=1, max_iter=100)
-        lyap_exps.append([N, exponent])
-
-    print('\n')
-    for N, lyap_exp in lyap_exps:
-        print(f'Lyapunov exponent for N={N} : {max(lyap_exp)}')
+        print(f'Lyapunov exponent for N={N} : {max(exponent)}')
 
 
     ######## Question 3 ########
@@ -73,8 +69,7 @@ def Exercice2():
     for scale in [0.01, 0.05, 0.1]:
         print(f'\nBruit à {scale*100} % du niveau du signal.\n')
 
-        lyap_exps = []
-        for N in tqdm(range(1000, 11000, 1000)):
+        for N in range(1000, 11000, 1000):
             x, _, _ = attractors.baier_klein(0, 0, 0, N)
 
             x_square = [xi*xi for xi in x]
@@ -82,11 +77,7 @@ def Exercice2():
             data = np.array(x_square) + bruit
 
             exponent = lyapunov.lyapunov_rosenstein(data, d, time_delay=0, mean_period=1, max_iter=100)
-            lyap_exps.append([N, exponent])
-
-        print('\n')
-        for N, lyap_exp in lyap_exps:
-            print(f'Lyapunov exponent avec bruit {scale*100}% for N={N} : {max(lyap_exp)}')
+            print(f'Lyapunov exponent avec bruit {scale*100}% for N={N} : {max(exponent)}')
 
 
 def Exercice3():
@@ -124,4 +115,4 @@ def Exercice3():
     dim_corr = correlation_dim.correlation_dim(yn, tau, d)
     dim_corr_bruite = correlation_dim.correlation_dim(yn_bruit, tau, d)
     print(f'\nDim Corrélation Ikeda Imaginaire pour N={N}, tau={tau}, d={d} : {dim_corr}')
-    print(f'\nDim Corrélation Ikeda Imaginaire bruité pour N={N}, tau={tau}, d={d} : {dim_corr_bruite}')
+    print(f'\nDim Corrélation Ikeda Imaginaire bruité pour N={N}, tau={tau}, d={d} : {dim_corr_bruite}\n')
