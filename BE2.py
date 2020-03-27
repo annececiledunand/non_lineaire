@@ -4,7 +4,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from tqdm import tqdm
 import math
 
-from functions import lorentz, corr_dim
+from functions import lorentz, correlation_dim
 from functions.BE2_LEGACY import fnn, Tao
 from functions.lyapunov import phase_space_reconstruction, lyapunov_rosenstein
 
@@ -167,8 +167,7 @@ def Exercice3():
 
     xn = np.array(xn)
     x = phase_space_reconstruction(xn, m=15, time_delay=1)
-    from corr_dim import corr_dim
-    print(corr_dim(x, d=2, dt=0.2, nb_iter=100))
+    print(correlation_dim.correlation_dim(x, d=2, dt=0.2, nb_iter=100))
     print(f'Dim Corrélation: {Dim_Corr(x)}')
 
     print('# Question 2\n')
